@@ -16,12 +16,13 @@ services:
       - key: SUPABASE_SERVICE_KEY
         sync: false
 
-  - type: static
+  - type: web
     name: sales-copilot-frontend
+    env: static
     plan: free
     rootDir: sales_project/frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_BACKEND_URL
         fromRoute:
