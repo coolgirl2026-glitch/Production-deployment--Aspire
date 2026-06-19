@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: sales-copilot-backend
+    env: node
+    plan: free
+    rootDir: sales_project/backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+  - type: static
+    name: sales-copilot-frontend
+    plan: free
+    rootDir: sales_project/frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromRoute:
+          type: web
+          name: sales-copilot-backend
+          property: url
